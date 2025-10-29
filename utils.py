@@ -2,7 +2,7 @@ from typing import Dict, List, Optional
 from collections import defaultdict
 from datetime import date, timedelta
 import random
-from HRMS import *
+from hrms import *
 
 def seed_services(employee_manager, leave_manager, meeting_manager, ticket_manager):
     """
