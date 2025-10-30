@@ -44,4 +44,3 @@ Add the following configuration to your claude_desktop_config.json file:
 Alternatively, you can draft a custom prompt and let the agent take over.
 
 
-All rights reserver @Codebasics Inc and LearnerX India Private Ltd.
