@@ -8,20 +8,24 @@ This project demonstrates how an AI agent can execute HR processes end-to-end us
 
 ## Table of Contents
 
-1. [What this project is](#what-this-project-is)  
-2. [How to use the system](#how-to-use-the-system)  
-3. [Architecture](#architecture)  
-4. [Repository structure](#repository-structure)  
-5. [Prerequisites](#prerequisites)  
-6. [Configure Claude Desktop](#configure-claude-desktop)  
-7. [Environment variables](#environment-variables)  
-8. [MCP tools](#mcp-tools)  
-9. [Onboarding flow](#onboarding-flow)  
-10. [Notes and limitations](#notes-and-limitations)
+## Table of Contents
+
+- [What this project is](#what-this-project-is)
+- [How to use the system](#how-to-use-the-system)
+- [Architecture](#architecture)
+- [Repository structure](#repository-structure)
+- [Prerequisites](#prerequisites)
+- [Configure Claude Desktop](#configure-claude-desktop)
+- [Environment variables](#environment-variables)
+- [MCP tools](#mcp-tools)
+- [Onboarding flow](#onboarding-flow)
+- [Notes and limitations](#notes-and-limitations)
+
+
 
 ---
 
-## 1. What this project is
+## What this project is
 
 This repository contains:
 
@@ -35,7 +39,7 @@ The data is stored in memory and reset each time the server restarts. Once integ
 
 ---
 
-## 2. How to use the system
+## How to use the system
 
 You do **not** start by running `python server.py`.
 
@@ -53,7 +57,7 @@ Claude will automatically call this MCP server via stdio, execute the tools, and
 
 ---
 
-## 3. Architecture
+## Architecture
 
 The system has three main layers:
 
@@ -82,14 +86,11 @@ end
 
 C --> H;
 D --> X[(SMTP)];
-
-
-
 ```
 
 ---
 
-## 4. Repository structure
+## Repository structure
 
 ```text
 rohan0497-hr-assist/
@@ -111,7 +112,7 @@ rohan0497-hr-assist/
 
 ---
 
-## 5. Prerequisites
+## Prerequisites
 
 - Python 3.11  
 - Claude Desktop installed  
@@ -127,7 +128,7 @@ python-dotenv
 
 ---
 
-## 6. Configure Claude Desktop
+## Configure Claude Desktop
 
 Edit your Claude Desktop MCP configuration file and add:
 
@@ -153,7 +154,7 @@ You don’t need to run any Python commands manually. Claude will manage that.
 
 ---
 
-## 7. Environment variables
+## Environment variables
 
 You have to use a `.env` file and define them in Claude’s config.
 
@@ -175,7 +176,7 @@ load_dotenv()
 
 ---
 
-## 8. MCP tools
+## MCP tools
 
 Defined in `server.py`:
 
@@ -204,7 +205,7 @@ This tells Claude how to structure an onboarding sequence (add employee, send em
 
 ---
 
-## 9. Onboarding flow
+## Onboarding flow
 
 1. Open Claude Desktop  
 2. Confirm MCP config includes `hr-assist`  
@@ -225,7 +226,7 @@ Everything is handled inside Claude Desktop, you never run the server manually.
 
 ---
 
-## 10. Notes and limitations
+## Notes and limitations
 
 - Data is in-memory and resets when the server restarts  
 - Demonstrates MCP workflow, not a production HRMS  
