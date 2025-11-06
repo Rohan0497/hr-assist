@@ -6,7 +6,6 @@ This project demonstrates how an AI agent can execute HR processes end-to-end us
 
 ---
 
-## Table of Contents
 
 ## Table of Contents
 
@@ -128,6 +127,50 @@ python-dotenv
 
 ---
 
+## Local setup and dependency installation
+
+1. **Clone the repo and create a virtual environment**
+   ```powershell
+   git clone https://github.com/your-org/hr-assist.git
+   cd hr-assist
+   python -m venv .venv
+   ```
+   Activate it with `.venv\Scripts\activate` on Windows or `source .venv/bin/activate` on macOS/Linux.
+
+2. **Install the dependencies declared in `pyproject.toml`**
+   - Recommended (`uv` respects `uv.lock` for deterministic installs):
+     ```bash
+     pip install --upgrade uv
+     uv sync
+     ```
+   - Plain `pip` fallback:
+     ```bash
+     python -m pip install --upgrade pip
+     pip install -e .
+     ```
+     (Pip will read the dependency metadata directly from `pyproject.toml`.)
+
+3. **Generate a `requirements.txt` when another environment needs it**
+   ```bash
+   uv pip freeze > requirements.txt
+   ```
+   Commit or share that file only if another runtime specifically requires `pip install -r requirements.txt`. Re-run the command whenever you change dependencies so the export stays in sync with `pyproject.toml`/`uv.lock`.
+
+---
+
+## Repo hygiene files
+
+
+If you modify dependencies in `pyproject.toml`, run `uv sync` (or `pip install -e .`) to refresh the environment and then regenerate the export so downstream users can keep up:
+
+```bash
+uv pip freeze > requirements.txt
+```
+
+Commit the updated `requirements.txt` only when its contents change alongside the `pyproject.toml`/`uv.lock` edits so everything stays consistent.
+
+---
+
 ## Configure Claude Desktop
 
 Edit your Claude Desktop MCP configuration file and add:
@@ -156,7 +199,12 @@ You don’t need to run any Python commands manually. Claude will manage that.
 
 ## Environment variables
 
-You have to use a `.env` file and define them in Claude’s config.
+HR-ASSIST needs Gmail credentials for SMTP. Provide them using **one** of the options below so you are not duplicating secrets in multiple places:
+
+- **Option A  `.env` file for local development.** Store `CB_EMAIL` and `CB_EMAIL_PWD` in a local `.env`. `python-dotenv` loads it whenever `server.py` starts, so secrets stay out of the Claude config while you test locally.
+- **Option B  Claude Desktop MCP config.** Add the same variables under the Claude MCP `env` block. Claude injects them into the process environment each time it launches the server.
+
+`load_dotenv()` runs with its default `override=False`, so anything Claude already sets wins. If both sources define the same key, the Claude/Desktop config takes precedence. Pick a single source of truth per environment (e.g., `.env` while developing, Claude config in production) to avoid confusion.
 
 Example `.env` file:
 
@@ -165,14 +213,10 @@ CB_EMAIL=your_email@example.com
 CB_EMAIL_PWD=your_app_password
 ```
 
-These values are loaded automatically using:
-
 ```python
 from dotenv import load_dotenv
 load_dotenv()
 ```
-
-
 
 ---
 
@@ -223,6 +267,20 @@ This tells Claude how to structure an onboarding sequence (add employee, send em
    > show meetings for the new employee
 
 Everything is handled inside Claude Desktop, you never run the server manually.
+
+### Example output
+
+
+- Click on the `+` icon and select the `Add from hr-assist` option, and send the request.
+- Fill the details for the new employee:
+
+<img src="resources\image.jpg" alt="Claude desktop prompt with fields" style="width:auto;height:300px;padding-left:30px">
+
+Alternatively, you can draft a custom prompt and let the agent take over.
+
+You can also confirm visually inside Claude’s tool pane. The screenshot below (stored at `resources/image.jpg`) shows the full onboarding checklist completed end-to-end:
+
+
 
 ---
 
