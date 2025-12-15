@@ -288,7 +288,7 @@ Prefer using the Claude Desktop form instead of a pure text prompt?
 2. Fill in the employee details and submit; Claude will chain the tools automatically.
 
 <!-- ![Successful onboarding flow](Resources/image.jpg) -->
-![Successful onboarding flow](/image.jpg)
+![Successful onboarding flow](image.jpg)
 
 <!-- You can also confirm visually inside Claude?s tool pane. The screenshot above (stored at `Resources/image.jpg`) shows the full onboarding checklist completed end-to-end. -->
 
