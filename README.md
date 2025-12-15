@@ -1,8 +1,8 @@
-# HR-ASSIST Agentic MCP Server for HR Workflows
+﻿# HR-ASSIST Agentic MCP Server for HR Workflows
 
 HR-ASSIST is an agentic AI MCP server that exposes HR operations as MCP tools so that an MCP-capable client such as Claude Desktop can drive HR workflows like onboarding, ticket creation, meeting scheduling, and leave management.
 
-This project demonstrates how an AI agent can execute HR processes end-to-end using MCP (Model Context Protocol). The HRMS data is seeded in memory, and emails are sent via Gmail SMTP. The intent is to illustrate the full flow even when you don’t have access to paid HRMS APIs like Keka or enterprise Outlook.
+This project demonstrates how an AI agent can execute HR processes end-to-end using MCP (Model Context Protocol). The HRMS data is seeded in memory, and emails are sent via Gmail SMTP. The intent is to illustrate the full flow even when you donÔÇÖt have access to paid HRMS APIs like Keka or enterprise Outlook.
 
 ---
 
@@ -60,9 +60,9 @@ Claude will automatically call this MCP server via stdio, execute the tools, and
 
 The system has three main layers:
 
-**Client** — Claude Desktop (the reasoning layer)  
-**Server** — MCP server (`server.py`) exposing HR tools  
-**Service Layer** — HRMS managers (`HRMS/`) storing and managing HR data
+**Client** ÔÇö Claude Desktop (the reasoning layer)  
+**Server** ÔÇö MCP server (`server.py`) exposing HR tools  
+**Service Layer** ÔÇö HRMS managers (`HRMS/`) storing and managing HR data
 
 
 
@@ -93,20 +93,20 @@ D --> X[(SMTP)];
 
 ```text
 rohan0497-hr-assist/
-├── README.md
-├── emails.py
-├── main.py
-├── pyproject.toml
-├── server.py
-├── utils.py
-├── .python-version
-└── HRMS/
-    ├── __init__.py
-    ├── employee_manager.py
-    ├── leave_manager.py
-    ├── meeting_manager.py
-    ├── schemas.py
-    └── ticket_manager.py
+Ôö£ÔöÇÔöÇ README.md
+Ôö£ÔöÇÔöÇ emails.py
+Ôö£ÔöÇÔöÇ main.py
+Ôö£ÔöÇÔöÇ pyproject.toml
+Ôö£ÔöÇÔöÇ server.py
+Ôö£ÔöÇÔöÇ utils.py
+Ôö£ÔöÇÔöÇ .python-version
+ÔööÔöÇÔöÇ HRMS/
+    Ôö£ÔöÇÔöÇ __init__.py
+    Ôö£ÔöÇÔöÇ employee_manager.py
+    Ôö£ÔöÇÔöÇ leave_manager.py
+    Ôö£ÔöÇÔöÇ meeting_manager.py
+    Ôö£ÔöÇÔöÇ schemas.py
+    ÔööÔöÇÔöÇ ticket_manager.py
 ```
 
 ---
@@ -160,6 +160,7 @@ python-dotenv
 
 ## Repo hygiene files
 
+The root `.gitignore` already drops the usual Python clutter: `__pycache__/`, `*.py[oc]`, build artifacts (`build/`, `dist/`, `wheels/`, `*.egg-info`), and local virtual environments such as `.venv`. Keep your venv inside that directory (or elsewhere) and Git will stay clean without adding extra ignore rules.
 
 If you modify dependencies in `pyproject.toml`, run `uv sync` (or `pip install -e .`) to refresh the environment and then regenerate the export so downstream users can keep up:
 
@@ -193,7 +194,7 @@ Edit your Claude Desktop MCP configuration file and add:
 
 After saving, **restart Claude Desktop**.  
 Then open the **Tools** tab and confirm that `hr-assist` appears in the list.  
-You don’t need to run any Python commands manually. Claude will manage that.
+You donÔÇÖt need to run any Python commands manually. Claude will manage that.
 
 ---
 
@@ -270,17 +271,28 @@ Everything is handled inside Claude Desktop, you never run the server manually.
 
 ### Example output
 
+When onboarding succeeds, Claude returns a transcript similar to:
 
-- Click on the `+` icon and select the `Add from hr-assist` option, and send the request.
-- Fill the details for the new employee:
+```text
+Claude
+- add_employee  -> Created Rohan Verma under manager_id=EMP-002 with temp credentials sent via email.
+- send_email    -> Welcome email queued to rohan.verma@example.com.
+- create_ticket -> Laptop (ThinkPad T14) procurement ticket IT-482 opened.
+- create_ticket -> VPN access request ticket SEC-233 opened.
+- schedule_meeting -> Kickoff meeting booked for 2024-05-12 10:00 IST with Sarah Johnson.
+```
 
-<img src="resources\image.jpg" alt="Claude desktop prompt with fields" style="width:auto;height:300px;padding-left:30px">
+Prefer using the Claude Desktop form instead of a pure text prompt?
 
-Alternatively, you can draft a custom prompt and let the agent take over.
+1. Click the `+` icon in the Tools panel and choose **Add from hr-assist**.
+2. Fill in the employee details and submit; Claude will chain the tools automatically.
 
-You can also confirm visually inside Claude’s tool pane. The screenshot below (stored at `resources/image.jpg`) shows the full onboarding checklist completed end-to-end:
+<!-- ![Successful onboarding flow](Resources/image.jpg) -->
+![Successful onboarding flow](/image.jpg)
 
+<!-- You can also confirm visually inside Claude?s tool pane. The screenshot above (stored at `Resources/image.jpg`) shows the full onboarding checklist completed end-to-end. -->
 
+---
 
 ---
 
@@ -294,3 +306,85 @@ You can also confirm visually inside Claude’s tool pane. The screenshot below 
 
 ---
 Credits : Codebasics
+<!-- --- -->
+<!-- ```mermaid
+
+flowchart TB
+  %% SOURCES & INGESTION
+  subgraph Sources[Content sources]
+    S1[Textbooks & handouts]
+    S2[Department notes]
+    S3[Past papers & mark schemes]
+  end
+
+  subgraph Ingest[Ingestion]
+    I1[Import & sync]
+    I2[PDF/image extraction]
+    I3[Sectioning & metadata tags]
+    I4[Embeddings build]
+  end
+
+  subgraph Storage[Storage]
+    ST1[Document store]
+    ST2[Vector index]
+  end
+
+  %% RETRIEVAL & ORCHESTRATION
+  subgraph Retrieval[Retrieval]
+    R1[Query understanding]
+    R2[Hybrid search]
+    R3[Reranking]
+    R4[Context builder with sources]
+  end
+
+  subgraph Orchestrator[LLM orchestrator]
+    P1[Prompt templates]
+    P2[Hint-first policy]
+    P3[Stepwise policy]
+    P4[Answer generator with citations]
+    P5[Model routing small to large]
+  end
+
+  %% SAFETY & UX
+  subgraph Safety[Safety & compliance]
+    F1[Age band rules]
+    F2[Personal data removal]
+    F3[Harmful content filter]
+    F4[Incident log & audit]
+  end
+
+  subgraph UX[Student & teacher experience]
+    U1[Student chat]
+    U2[Classroom mode]
+    U3[Teacher dashboard]
+  end
+
+  subgraph Obs[Analytics & observability]
+    O1[Retrieval metrics]
+    O2[Answer quality reviews]
+    O3[Usage & latency]
+    O4[Versioning & rollback]
+  end
+
+  subgraph Integrations[School integration]
+    G1[School sign in]
+    G2[Learning platform embed]
+  end
+
+  %% FLOWS
+  Sources -- Ingest -- Storage
+  U1 -- Retrieval
+  Storage -- Retrieval
+  Retrieval -- Orchestrator
+  Orchestrator -- UX
+  Orchestrator -- Safety
+  Safety -- UX
+
+  %% TAPS TO OBSERVABILITY
+  Retrieval -. metrics .- Obs
+  Orchestrator -. events .- Obs
+  Safety -. incidents .- Obs
+  UX -. feedback .- Obs
+
+  %% INTEGRATIONS
+  Integrations -- UX -->
