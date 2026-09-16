@@ -305,7 +305,7 @@ Prefer using the Claude Desktop form instead of a pure text prompt?
 - This repo = actionable backend for HR operations  
 
 ---
-Credits : Codebasics
+
 <!-- --- -->
 <!-- ```mermaid
 
